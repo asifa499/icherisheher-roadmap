@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="az"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>İçərişəhər — Funksiya Təsviri və Qəbul Meyarları</title>
+<style>
+:root{--blue:#2D9CDB;--frame:#222B36;--ink:#1F2933;--ink2:#52606D;--faint:#9AA5B1;--line:#E4E9EF;--f:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--f);color:var(--ink);background:#EDF1F5;line-height:1.5}
+.topbar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1.5px solid var(--frame);display:flex;align-items:center;gap:14px;padding:10px 22px}
+.topbar .back{font-size:13px;font-weight:600;color:var(--blue);text-decoration:none;white-space:nowrap}
+.topbar .back:hover{text-decoration:underline}
+.topbar .ttl{font-size:14px;font-weight:700;color:var(--ink);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dl{font-size:12.5px;font-weight:700;color:#fff;background:var(--blue);padding:7px 14px;border-radius:8px;text-decoration:none;white-space:nowrap;transition:.15s}
+.dl:hover{background:#2489C4}
+.wrap{max-width:960px;margin:0 auto;padding:26px 22px 60px}
+.hero{background:#fff;border:1.5px solid var(--frame);border-radius:14px;padding:22px 26px;margin-bottom:16px}
+.hero h1{font-size:22px;font-weight:700;letter-spacing:-.01em}
+.hero .s1{color:var(--ink2);font-size:13.5px;margin-top:6px}
+.hero .s2{color:var(--faint);font-size:12px;margin-top:3px}
+.toc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:4px 18px}
+.toc a{font-size:12.5px;color:var(--ink2);text-decoration:none;padding:3px 0;display:block}
+.toc a:hover{color:var(--blue)}
+.toc .tnum{font-weight:700;color:var(--blue);font-size:11px;margin-right:2px}
+.howto{background:#F6F9FC;border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:20px}
+.howto h3{font-size:13px;font-weight:700;margin-bottom:8px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink2)}
+.howto ul{margin-left:18px}
+.howto li{font-size:13px;color:var(--ink2);margin:4px 0}
+.sec{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin-bottom:18px;scroll-margin-top:64px}
+.sec h2{font-size:17px;font-weight:700;display:flex;align-items:center;gap:8px;padding-bottom:10px;border-bottom:2px solid #EEF2F7;margin-bottom:8px}
+.snum{color:var(--blue)}
+.scode{margin-left:auto;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;font-weight:700;color:#fff;background:#5B6675;padding:2px 8px;border-radius:5px}
+.trk{font-size:11px;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;margin:2px 0 6px}
+.sdesc{font-size:13px;color:var(--ink2);font-style:italic;margin:4px 0 12px}
+.fn{border:1px solid var(--line);border-radius:10px;padding:12px 16px;margin:10px 0;background:#FBFCFE}
+.fnhead{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.fid{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;font-weight:700;color:var(--faint);background:#EEF2F7;padding:2px 7px;border-radius:5px;flex-shrink:0}
+.fname{font-size:13.5px;font-weight:700}
+.pp{margin-left:auto;flex-shrink:0;font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px}
+.P0{background:#FBEFD3;color:#9A6A12}.P1{background:#DCF0E9;color:#2E7D6B}.P2{background:#ECE6F2;color:#74619A}.PD{background:#EEF2F7;color:#8A94A3}
+.ne{font-size:13px;color:var(--ink);margin:6px 0}
+.ne b{color:var(--ink2)}
+.qm{font-size:12px;font-weight:700;color:var(--ink2);text-transform:uppercase;letter-spacing:.04em;margin:8px 0 2px}
+.qm b{font-weight:700}
+.crit{margin:2px 0 4px 20px}
+.crit li{font-size:12.5px;color:var(--ink2);margin:3px 0}
+@media print{.topbar{position:static}.dl,.back{display:none}}
+</style></head><body>
+<div class="topbar">
+<a class="back" href="index.html">← Roadmap</a>
+<span class="ttl">İçərişəhər — Funksiya Təsviri və Qəbul Meyarları</span>
+<a class="dl" href="icherisheher_funksiya_tesviri.docx" download>⬇ Word (.docx)</a>
+</div>
+<div class="wrap">
+<div class="hero"><h1>İçərişəhər — Funksiya Təsviri və Qəbul Meyarları</h1><p class="s1">Acceptance Criteria · Biznes · Dizayn · Development komandaları üçün</p><p class="s2">Versiya 1.0 · İyun 2026 · Futurelab × BIR Ekosistem</p></div>
+<div class="toc"><a href="#sec-GLB"><span class="tnum">1.1</span> Qlobal elementlər</a><a href="#sec-HOME"><span class="tnum">1.2</span> Ana səhifə</a><a href="#sec-EXP"><span class="tnum">1.3</span> Explore</a><a href="#sec-TOUR"><span class="tnum">1.4</span> Tours</a><a href="#sec-EAT"><span class="tnum">1.5</span> Eat &amp; Drink</a><a href="#sec-MUS"><span class="tnum">1.6</span> Museums</a><a href="#sec-STAY"><span class="tnum">1.7</span> Sleep &amp; Stay</a><a href="#sec-QALA"><span class="tnum">1.8</span> Qala Reserve</a><a href="#sec-PLAN"><span class="tnum">1.9</span> Plan Your Visit</a><a href="#sec-TOP"><span class="tnum">1.10</span> Top Things To Do</a><a href="#sec-PHOTO"><span class="tnum">1.11</span> Photo Heritage Collection</a><a href="#sec-PASS"><span class="tnum">1.12</span> İçərişəhər Pass</a><a href="#sec-ECOM"><span class="tnum">1.13</span> E-ticarət</a><a href="#sec-TECH"><span class="tnum">1.14</span> Texniki funksiyalar</a><a href="#sec-ADMIN"><span class="tnum">1.15</span> Admin / CMS</a><a href="#sec-ROUTE"><span class="tnum">1.16</span> Marşrut &amp; Naviqasiya (xəritədə)</a><a href="#sec-LABEL"><span class="tnum">2.1</span> "Bu nədir" bina etiketləri</a><a href="#sec-GATE"><span class="tnum">2.2</span> "Siz buradasınız" giriş xəritələri</a><a href="#sec-AG"><span class="tnum">3.1</span> AI Audio Guide (Dalğa 1)</a></div>
+<div class="howto"><h3>Bu sənəd necə oxunur</h3>
+<ul class="crit"><li><b>Nə edir:</b> funksiyanın sadə dildə nə işə yaradığı.</li><li><b>Qəbul meyarları:</b> funksiya nə vaxt "hazır" sayılır — yoxlanıla bilən nəticələr.</li><li><b>Prioritet:</b> P0 = ilk launch üçün kritik, P1 = ikinci dalğa, P2 = sonrakı genişlənmə. (Fiziki və AI addımlarında prioritet "—" ilə işarələnir.)</li></ul>
+</div>
+<section id="sec-GLB" class="sec">
+<h2><span class="snum">1.1</span> Qlobal elementlər <span class="scode">GLB</span></h2>
+<div class="trk">Track: <b>Web</b></div>
+<p class="sdesc">Bütün səhifələrdə təkrarlanan ortaq elementlər — başlıq, menyu, footer, dil seçimi. Bunlar saytın "skeleti"dir.</p>
+<div class="fn"><div class="fnhead"><span class="fid">GLB-01</span><span class="fname">6 dil seçici (AZ/EN/RU/TR/AR/CN)</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Səhifənin yuxarı hissəsində dil seçmə düyməsi olur. İstifadəçi dili dəyişdikdə bütün interfeys mətnləri (menyu, düymələr, başlıqlar) həmin dildə göstərilir. Altı dil dəstəklənir: Azərbaycan, ingilis, rus, türk, ərəb və çin.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>İstifadəçi açılan siyahıdan istənilən dili seçə bilir.</li><li>Dil seçildikdən sonra səhifə həmin dildə yenilənir.</li><li>Seçilmiş dil yadda saxlanılır (növbəti açılışda eyni qalır).</li><li>Ərəb dilində mətn sağdan-sola düzgün göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">GLB-06</span><span class="fname">Əsas naviqasiya menyusu (8 səhifə)</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Yuxarıda əsas menyu olur və istifadəçini saytın 8 əsas bölməsinə (Ana səhifə, Explore, Tours, Museums və s.) aparır. Mobil cihazda menyu "hamburger" düyməsi altında yığılır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Bütün 8 əsas bölmə menyuda görünür.</li><li>Menyu elementinə klik düzgün səhifəni açır.</li><li>Hazırda açıq olan bölmə menyuda fərqlənir.</li><li>Mobil cihazda menyu açılıb-bağlanır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">GLB-07</span><span class="fname">Hero bölməsi + əsas CTA-lar</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Hər səhifənin yuxarısında böyük şəkil/başlıq sahəsi (hero) və əsas hərəkət düymələri (məs. "Kəşf et", "Bilet al") olur. Bu, istifadəçinin diqqətini ən vacib addıma yönəldir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Hero sahəsi başlıq, qısa mətn və ən azı bir əsas düymə göstərir.</li><li>Düyməyə klik uyğun səhifə və ya addıma aparır.</li><li>Şəkil və mətn mobil ekranda düzgün uyğunlaşır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">GLB-08</span><span class="fname">Footer — 6 sütun naviqasiya</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Səhifənin ən altında bütün vacib linkləri (bölmələr, əlaqə, sosial şəbəkə, hüquqi məlumat) qruplaşdıran footer olur. İstifadəçi istənilən səhifədən vacib keçidlərə çata bilir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Footer əsas bölmələrə linkləri göstərir.</li><li>Əlaqə və sosial şəbəkə linkləri işləyir.</li><li>Footer bütün səhifələrdə eyni görünür.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">GLB-11</span><span class="fname">Responsive / mobil uyğunluq</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Bütün səhifələr telefon, planşet və kompüter ekranlarına avtomatik uyğunlaşır. Mətn, şəkil və düymələr hər ölçüdə rahat oxunur və toxunula bilir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Səhifə telefonda yan-yana sürüşmə olmadan görünür.</li><li>Düymələr barmaqla rahat basıla bilir.</li><li>Şəkil və mətn ekran ölçüsünə görə düzülür.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">GLB-12</span><span class="fname">Dil yaddaşı</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçinin seçdiyi dil brauzerdə yadda saxlanılır. Növbəti dəfə saytı açanda eyni dildə açılır, yenidən seçməyə ehtiyac qalmır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Seçilmiş dil səhifə yeniləndikdə qalır.</li><li>Sayt bağlanıb yenidən açılanda eyni dildə açılır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">GLB-02</span><span class="fname">"Today in İçərişəhər" widget (hava, tədbir)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Kiçik bir blok bu günün havasını və günün tədbirlərini göstərir. İstifadəçi səhifəni açan kimi indi nə baş verdiyini görür.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Cari hava göstərilir.</li><li>Bugünkü tədbirlər (varsa) görünür.</li><li>Məlumat yoxdursa, blok boş/qarışıq görünmür.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">GLB-03</span><span class="fname">Download App düyməsi</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Mobil tətbiq mövcud olduqda onu yükləmək üçün düymə göstərir (App Store / Google Play).</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Düymə uyğun mağaza səhifəsinə aparır.</li><li>Cihaza görə düzgün mağaza açılır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">GLB-04</span><span class="fname">Get a Quote düyməsi (B2B)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Korporativ/qrup müştərilər üçün təklif istəmə düyməsi. Klik etdikdə qısa sorğu forması açılır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Düymə təklif/sorğu formasını açır.</li><li>Forma göndərildikdə təsdiq mesajı çıxır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">GLB-05</span><span class="fname">WhatsApp dəstək inteqrasiyası</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçinin bir kliklə WhatsApp vasitəsilə dəstək xətti ilə əlaqə saxlamasına imkan verir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Düymə WhatsApp söhbətini açır.</li><li>Doğru nömrə/əlaqə avtomatik seçilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">GLB-09</span><span class="fname">Newsletter abunəlik forması</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçi e-poçtunu yazıb xəbər bülletenia abunə ola bilir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>E-poçt daxil edilib göndərilə bilir.</li><li>Yanlış e-poçt formatı xəbərdarlıq verir.</li><li>Uğurlu abunədən sonra təsdiq göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">GLB-10</span><span class="fname">Etibar zolağı (UNESCO, rəsmi loqolar)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Rəsmi tərəfdaş və status loqolarını (məs. UNESCO) göstərən zolaq. İstifadəçidə etibar yaradır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Loqolar düzgün və aydın göstərilir.</li><li>Loqoya klik (varsa) müvafiq səhifəyə aparır.</li></ul>
+</div>
+</section>
+<section id="sec-HOME" class="sec">
+<h2><span class="snum">1.2</span> Ana səhifə <span class="scode">HOME</span></h2>
+<div class="trk">Track: <b>Web</b></div>
+<p class="sdesc">Saytın giriş səhifəsi — istifadəçini əsas bölmələrə yönləndirən vitrindir.</p>
+<div class="fn"><div class="fnhead"><span class="fid">HOME-01</span><span class="fname">About İçərişəhər bloku</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> İçərişəhər haqqında qısa, cəlbedici giriş mətni və şəkil göstərir. Məqsəd istifadəçiyə yerin nə olduğunu bir baxışda çatdırmaqdır. "Ətraflı" keçidi tam məlumat səhifəsinə aparır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Giriş mətni və şəkil göstərilir.</li><li>"Ətraflı" keçidi tam məlumata aparır.</li><li>Mətn seçilmiş dildə görünür.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">HOME-02</span><span class="fname">Top Things to Do slayder</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Görüləsi ən maraqlı yerləri və təcrübələri yana sürüşən kartlar şəklində göstərir. İstifadəçi tez bir zamanda ən yaxşı seçimləri görür və birbaşa onların səhifəsinə keçə bilir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Kartlar yana sürüşdürülə bilir.</li><li>Karta klik onun detal səhifəsini açır.</li><li>Mobil və kompüterdə düzgün görünür.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">HOME-03</span><span class="fname">Museums &amp; Living Heritage bloku</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Seçilmiş muzeyləri və canlı irs məkanlarını şəkil və adla önə çıxarır. "Hamısına bax" keçidi ilə tam Museums səhifəsinə aparır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Seçilmiş muzeylər şəkil və adla görünür.</li><li>Karta klik muzey səhifəsini açır.</li><li>"Hamısına bax" Museums səhifəsinə aparır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">HOME-04</span><span class="fname">Guided Tours bloku</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Bələdçili turları tanıdan bölmə — bir neçə tur ad, müddət və qiymətlə göstərilir. İstifadəçini tur seçməyə və bron etməyə həvəsləndirir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Turlar ad, müddət və qiymətlə kartda görünür.</li><li>Karta klik tur detalına aparır.</li><li>"Bütün turlar" Tours səhifəsinə keçir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">HOME-06</span><span class="fname">Interactive Map preview bloku</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Tam interaktiv xəritənin kiçik önizləməsini göstərir. İstifadəçi şəhərin xəritəsini görüb tam xəritə təcrübəsinə keçə bilir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Xəritənin kiçik versiyası görünür.</li><li>Klik tam interaktiv xəritə səhifəsini açır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">HOME-05</span><span class="fname">Cultural Life &amp; Events bloku</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Yaxın tədbirləri və mədəni həyatı tarix və adla göstərir. İstifadəçi nə vaxt nə baş verdiyini görüb tədbirə keçə bilir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Yaxın tədbirlər tarix və adla görünür.</li><li>Tədbirə klik detalını açır.</li><li>Tədbir yoxdursa uyğun mesaj göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">HOME-07</span><span class="fname">Deals &amp; Offers bloku</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Aktiv endirim və xüsusi təklifləri göstərir. İstifadəçini sərfəli təkliflərdən yararlanmağa yönəldir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Aktiv təkliflər kartla görünür.</li><li>Klik təklifin detalına/alışa aparır.</li><li>Bitmiş təkliflər göstərilmir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">HOME-08</span><span class="fname">The Stories bloku</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> İçərişəhər haqqında hekayə və məqalələri şəkil və başlıqla göstərir. Məzmun marketinqi və dərin maraq üçündür.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Hekayələr şəkil və başlıqla görünür.</li><li>Klik tam hekayəni açır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">HOME-09</span><span class="fname">Press &amp; Media Hub bloku</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Mətbuat və media materiallarına (xəbərlər, press-relizlər) keçid bölməsi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Media/press linkləri görünür.</li><li>Klik uyğun səhifəyə və ya fayla aparır.</li></ul>
+</div>
+</section>
+<section id="sec-EXP" class="sec">
+<h2><span class="snum">1.3</span> Explore <span class="scode">EXP</span></h2>
+<div class="trk">Track: <b>Web</b></div>
+<p class="sdesc">Şəhəri kəşf etmə bölməsi — axtarış, filtr və interaktiv xəritə ilə bütün maraqlı yerlər.</p>
+<div class="fn"><div class="fnhead"><span class="fid">EXP-01</span><span class="fname">Axtarış paneli</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçi yerin, məkanın və ya təcrübənin adını yazıb axtara bilir. Yazdıqca uyğun nəticələr təklif olunur.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Açar söz yazılıb axtarış edilə bilir.</li><li>Uyğun nəticələr siyahıda göstərilir.</li><li>Nəticə yoxdursa uyğun mesaj çıxır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">EXP-02</span><span class="fname">Çoxlu filtr (kateqoriya, vaxt, maraq, Pass)</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Nəticələri kateqoriya, lazım olan vaxt, maraq sahəsi və Pass-a daxil olub-olmamasına görə süzgəcdən keçirir. İstifadəçi özünə uyğun yerləri tez tapır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Bir neçə filtr eyni vaxtda tətbiq oluna bilir.</li><li>Filtr dəyişdikdə nəticələr yenilənir.</li><li>Filtrləri sıfırlamaq mümkündür.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">EXP-03</span><span class="fname">Kateqoriya plitkaları</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Əsas kateqoriyaları (muzey, tur, restoran, məscid və s.) böyük, kliklənən plitkalar şəklində göstərir. Sürətli giriş nöqtəsidir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Kateqoriyalar plitkalarda görünür.</li><li>Plitkaya klik həmin kateqoriyanı filtrləyir/açır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">EXP-04</span><span class="fname">İnteraktiv xəritə (100+ POI)</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Şəhərin xəritəsində 100-dən çox maraq nöqtəsini (POI) göstərir. İstifadəçi xəritəni böyüdüb-kiçildə, nöqtələrə klik edib məlumat görə bilir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Xəritədə nöqtələr düzgün yerlərdə görünür.</li><li>Nöqtəyə klik qısa məlumat balonu açır.</li><li>Xəritə böyüdülüb-kiçildilə və sürüşdürülə bilir.</li><li>Kateqoriyaya görə nöqtələr filtrlənə bilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">EXP-05</span><span class="fname">Map / List view keçidi</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçi nəticələri xəritə üzərində və ya siyahı şəklində görmək arasında keçid edə bilir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Bir düymə ilə xəritə və siyahı arasında keçid olur.</li><li>Hər iki görünüşdə eyni nəticələr göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">EXP-09</span><span class="fname">POI detal səhifəsi</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Bir maraq nöqtəsinə klik edəndə açılan tam səhifə — şəkillər, təsvir, iş saatları, yerləşmə və əlaqəli yerlər. İstifadəçi qərar vermək üçün lazım olan hər şeyi görür.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Şəkil, təsvir və iş saatları göstərilir.</li><li>Xəritədə yerləşmə və marşrut keçidi var.</li><li>Əlaqəli yerlər/turlar təklif olunur.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">EXP-06</span><span class="fname">Featured Places bölməsi</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Redaksiya tərəfindən seçilmiş, önə çıxan yerləri göstərir. İstifadəçiyə "mütləq gör" siyahısı təqdim edir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Seçilmiş yerlər önə çıxarılır.</li><li>Karta klik detal səhifəsini açır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">EXP-07</span><span class="fname">Explore by Time</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçinin mövcud vaxtına görə (məs. 1--2 saat) uyğun yerləri təklif edir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>İstifadəçi vaxt aralığı seçə bilir.</li><li>Uyğun yerlər filtrlənib göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">EXP-08</span><span class="fname">Explore by Interest</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Maraq sahəsinə görə (tarix, memarlıq, yemək, foto və s.) uyğun yerləri təklif edir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>İstifadəçi maraq seçə bilir.</li><li>Seçimə uyğun yerlər göstərilir.</li></ul>
+</div>
+</section>
+<section id="sec-TOUR" class="sec">
+<h2><span class="snum">1.4</span> Tours <span class="scode">TOUR</span></h2>
+<div class="trk">Track: <b>Web</b></div>
+<p class="sdesc">Bələdçili və hazır turların kataloqu, detalları və bron sistemi.</p>
+<div class="fn"><div class="fnhead"><span class="fid">TOUR-01</span><span class="fname">Tour Finder (vaxt, maraq, dil, qrup, format)</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçi turları vaxt, maraq, bələdçi dili, qrup ölçüsü və formata görə süzgəcdən keçirib özünə uyğununu tapır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Bir neçə kriteriyaya görə filtr işləyir.</li><li>Filtr dəyişdikdə nəticələr yenilənir.</li><li>Nəticə yoxdursa uyğun mesaj çıxır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOUR-02</span><span class="fname">Tur kateqoriyaları</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Turları növlərə (tarixi, gəzinti, tematik və s.) görə qruplaşdırıb göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Kateqoriyalar aydın göstərilir.</li><li>Kateqoriyaya klik uyğun turları açır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOUR-03</span><span class="fname">Tur kartları (qiymət, müddət, badge)</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Hər tur kartda qiymət, müddət, reytinq və xüsusi nişanlarla (məs. "populyar") göstərilir. İstifadəçi turları tez müqayisə edir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Kart qiymət, müddət və əsas məlumatı göstərir.</li><li>Karta klik tur detalına aparır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOUR-04</span><span class="fname">Tur detal səhifəsi (route, guide, FAQ)</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Turun tam təsviri — marşrut, bələdçi haqqında, daxil olanlar, tez-tez verilən suallar və rəylər. İstifadəçi bron etməzdən əvvəl hər şeyi öyrənir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Marşrut, daxil olanlar və müddət göstərilir.</li><li>FAQ və rəylər mövcuddur.</li><li>Bron düyməsi aydın görünür.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOUR-05</span><span class="fname">Tur bron sistemi (tarix, qrup ölçüsü)</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçi tarix, saat və iştirakçı sayını seçib turu bron edir. Sistem mövcudluğu yoxlayır və alışa keçir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Tarix və iştirakçı sayı seçilə bilir.</li><li>Mövcud olmayan tarixlər seçilə bilmir.</li><li>Bron alış (checkout) prosesinə keçir.</li><li>Uğurlu brondan sonra təsdiq göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOUR-06</span><span class="fname">Reviews / reytinqlər</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Turlar üçün istifadəçi rəyləri və ulduz reytinqi göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Orta reytinq və rəylər görünür.</li><li>Rəylər tarixə görə sıralana bilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOUR-07</span><span class="fname">B2B / korporativ axın + forma</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Şirkətlər və qruplar üçün xüsusi sorğu axını və əlaqə forması.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Korporativ sorğu forması doldurulub göndərilə bilir.</li><li>Göndərişdən sonra təsdiq göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOUR-08</span><span class="fname">Qrup booking</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Böyük qruplar üçün xüsusi bron imkanı (artıq iştirakçı sayı, fərqli şərtlər).</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Qrup ölçüsü seçilə bilir.</li><li>Qrupa uyğun qiymət/şərt göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOUR-09</span><span class="fname">Qala Day Trip xüsusi səhifə</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Qala istiqamətinə günlük tur üçün ayrıca, ətraflı təqdimat səhifəsi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Səhifə marşrut, qiymət və daxil olanları göstərir.</li><li>Bron düyməsi işləyir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOUR-11</span><span class="fname">Upsell məntiqi (Pass, bilet)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Bron zamanı əlavə təkliflər (Pass, muzey bileti) təklif edir ki, müştəri daha çox dəyər alsın.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Uyğun əlavə təkliflər göstərilir.</li><li>Əlavə təklif səbətə əlavə oluna bilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOUR-12</span><span class="fname">Sticky CTA (book now)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Tur səhifəsində aşağı sürüşdürəndə də görünən, daimi "Bron et" düyməsi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>"Bron et" düyməsi sürüşdürərkən də görünür.</li><li>Klik bron addımına aparır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOUR-10</span><span class="fname">Partner marketplace</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Üçüncü tərəf tur operatorlarının təkliflərini platformada göstərən bölmə.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Partnyor turları kataloqda görünür.</li><li>Partnyor turu detalı/bron keçidi işləyir.</li></ul>
+</div>
+</section>
+<section id="sec-EAT" class="sec">
+<h2><span class="snum">1.5</span> Eat &amp; Drink <span class="scode">EAT</span></h2>
+<div class="trk">Track: <b>Web</b></div>
+<p class="sdesc">Restoran, kafe və yemək təcrübələrinin kataloqu.</p>
+<div class="fn"><div class="fnhead"><span class="fid">EAT-01</span><span class="fname">Food Finder (mətbəx, mood, vaxt, dietary)</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçi mətbəx növü, əhval (romantik, ailəvi), vaxt və pəhriz tələblərinə (vegetarian və s.) görə yer tapır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Bir neçə filtr birlikdə işləyir.</li><li>Filtrə uyğun yerlər göstərilir.</li><li>Nəticə yoxdursa uyğun mesaj çıxır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">EAT-02</span><span class="fname">Kateqoriyalar (9 növ)</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Yerləri 9 növə (restoran, kafe, çayxana və s.) görə qruplaşdırır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Bütün kateqoriyalar göstərilir.</li><li>Kateqoriyaya klik uyğun yerləri açır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">EAT-03</span><span class="fname">Restoran / kafe kartları</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Hər yeri kartda — şəkil, mətbəx, qiymət səviyyəsi və reytinqlə göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Kart əsas məlumatı göstərir.</li><li>Karta klik detal səhifəsini açır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">EAT-04</span><span class="fname">Book a table inteqrasiyası</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçinin masa rezervasiyası etməsinə imkan verir (daxili və ya xarici sistemlə).</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Tarix, saat və nəfər sayı seçilə bilir.</li><li>Rezervasiya təsdiqlənir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">EAT-05</span><span class="fname">View menu funksiyası</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Yerin menyusunu sayt daxilində göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Menyu açıla bilir.</li><li>Qiymət və yeməklər oxunaqlı göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">EAT-06</span><span class="fname">Taste of Azerbaijan kontent bölməsi</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Azərbaycan mətbəxini tanıdan məzmun bölməsi (ənənəvi yeməklər, hekayələr).</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Məzmun şəkil və mətnlə göstərilir.</li><li>Əlaqəli yerlərə keçid var.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">EAT-07</span><span class="fname">Qrup dining / korporativ</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Qrup və korporativ yemək təşkili üçün sorğu/məlumat bölməsi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Qrup sorğusu göndərilə bilir.</li><li>Təsdiq mesajı göstərilir.</li></ul>
+</div>
+</section>
+<section id="sec-MUS" class="sec">
+<h2><span class="snum">1.6</span> Museums <span class="scode">MUS</span></h2>
+<div class="trk">Track: <b>Web</b></div>
+<p class="sdesc">20 muzeyin kataloqu, axtarışı, detalları və tematik marşrutları.</p>
+<div class="fn"><div class="fnhead"><span class="fid">MUS-01</span><span class="fname">20 muzey kataloqu</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> İçərişəhərdəki 20 muzeyi vahid kataloqda göstərir. İstifadəçi hamısını bir yerdə görür.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Bütün muzeylər siyahıda görünür.</li><li>Hər muzey şəkil və adla göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">MUS-02</span><span class="fname">Museum Finder</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Muzeyləri tip, mövzu və yerləşməyə görə süzgəcdən keçirir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Filtrlər işləyir.</li><li>Nəticələr filtrə uyğun yenilənir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">MUS-03</span><span class="fname">Muzey kartları (badge, bilet statusu)</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Hər muzeyi kartda göstərir — şəkil, ad, nişanlar və biletin Pass-a daxil olub-olmaması.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Kart əsas məlumatı və bilet statusunu göstərir.</li><li>Karta klik muzey detalına aparır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">MUS-04</span><span class="fname">Muzey detal səhifəsi</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Muzeyin tam səhifəsi — təsvir, iş saatları, qiymət, şəkillər və yerləşmə.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>İş saatları və qiymət göstərilir.</li><li>Xəritədə yer və marşrut keçidi var.</li><li>Bilet/Pass keçidi mövcuddur.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">MUS-05</span><span class="fname">Must-See bölməsi</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Mütləq görülməli muzeyləri önə çıxarır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Seçilmiş muzeylər ayrıca göstərilir.</li><li>Karta klik detalı açır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">MUS-06</span><span class="fname">Tipə görə kəşf</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Muzeyləri növünə görə (tarixi, sənət, etnoqrafiya və s.) qruplaşdırır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Tiplər göstərilir.</li><li>Tipə klik uyğun muzeyləri açır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">MUS-07</span><span class="fname">Hazır muzey marşrutları (8)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Bir neçə muzeyi məntiqi ardıcıllıqla birləşdirən 8 hazır marşrut təklif edir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Marşrutlar siyahıda göstərilir.</li><li>Marşrut xəritədə və ya siyahı kimi açılır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">MUS-08</span><span class="fname">Qala muzey extension (4 muzey)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Qala istiqamətindəki 4 muzeyi kataloqa əlavə edən genişlənmə.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Qala muzeyləri kataloqda görünür.</li><li>Detal səhifələri işləyir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">MUS-09</span><span class="fname">Photo Heritage inteqrasiyası</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Muzey səhifələrini Photo Heritage foto kolleksiyaları ilə əlaqələndirir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Uyğun foto kolleksiyaları muzey səhifəsində göstərilir.</li></ul>
+</div>
+</section>
+<section id="sec-STAY" class="sec">
+<h2><span class="snum">1.7</span> Sleep &amp; Stay <span class="scode">STAY</span></h2>
+<div class="trk">Track: <b>Web</b></div>
+<p class="sdesc">İçərişəhər və ətrafındakı yerləşmə variantları, booking.com inteqrasiyası ilə.</p>
+<div class="fn"><div class="fnhead"><span class="fid">STAY-01</span><span class="fname">Stay Finder</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçi otelləri yerləşmə, qiymət və tipə görə süzgəcdən keçirib uyğununu tapır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Filtrlər işləyir.</li><li>Nəticələr filtrə uyğun yenilənir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">STAY-02</span><span class="fname">Otel kartları</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Hər oteli kartda — şəkil, ad, qiymət və reytinqlə göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Kart əsas məlumatı göstərir.</li><li>Karta klik otel detalına aparır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">STAY-03</span><span class="fname">booking.com API (dinamik qiymət)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Otel qiymət və mövcudluğunu booking.com-dan canlı çəkir. İstifadəçi həqiqi, güncəl qiymətləri görür.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Qiymət və mövcudluq canlı göstərilir.</li><li>Bron booking.com axınına yönləndirilir.</li><li>API cavab vermədikdə uyğun mesaj göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">STAY-04</span><span class="fname">Badge sistemi (Boutique, Historic...)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Otelləri nişanlarla (Boutique, Historic, Family və s.) etiketləyir ki, istifadəçi tez seçim etsin.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Uyğun nişanlar otel kartında göstərilir.</li><li>Nişana görə filtr mümkündür.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">STAY-05</span><span class="fname">Otel detal səhifəsi</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Otelin tam səhifəsi — şəkillər, imkanlar, yerləşmə və bron keçidi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>İmkanlar və şəkillər göstərilir.</li><li>Bron keçidi işləyir.</li></ul>
+</div>
+</section>
+<section id="sec-QALA" class="sec">
+<h2><span class="snum">1.8</span> Qala Reserve <span class="scode">QALA</span></h2>
+<div class="trk">Track: <b>Web</b></div>
+<p class="sdesc">Qala qoruğu üçün müstəqil destinasiya bölməsi — attraksionlar, marşrutlar, biletlər.</p>
+<div class="fn"><div class="fnhead"><span class="fid">QALA-01</span><span class="fname">Why Visit Qala bölməsi</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Qala-ya niyə getmək lazım olduğunu cəlbedici şəkil və mətnlə təqdim edir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Təqdimat mətni və şəkil göstərilir.</li><li>Əsas keçidlər (bilet, tur) mövcuddur.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">QALA-02</span><span class="fname">Experience Finder</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Qala-dakı təcrübələri maraq və vaxta görə süzgəcdən keçirir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Filtrlər işləyir.</li><li>Nəticələr yenilənir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">QALA-03</span><span class="fname">Main Attractions</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Qala-nın əsas görməli yerlərini şəkil və qısa təsvirlə göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Attraksionlar siyahıda görünür.</li><li>Karta klik detalı açır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">QALA-05</span><span class="fname">Qala marşrutları (8)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Qala üçün 8 hazır gəzinti marşrutu təklif edir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Marşrutlar göstərilir.</li><li>Marşrut detalı/xəritəsi açılır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">QALA-06</span><span class="fname">Biletlər / Pass</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Qala-ya giriş bileti və Pass məlumatını göstərib alışa imkan verir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Qiymət və bilet növləri göstərilir.</li><li>Alış/səbət keçidi işləyir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">QALA-07</span><span class="fname">Qala turları</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Qala üçün bələdçili turları göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Turlar kartda göstərilir.</li><li>Karta klik tur detalına aparır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">QALA-09</span><span class="fname">Praktik info</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Qala-ya çatma, iş saatları və praktik məsləhətlər.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>İş saatları və çatma yolu göstərilir.</li><li>Xəritə keçidi var.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">QALA-04</span><span class="fname">Sənətkarlıq workshop-ları</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Qala-dakı əl işi/sənətkarlıq emalatxanalarını və qeydiyyatı göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Workshop-lar göstərilir.</li><li>Qeydiyyat/sorğu keçidi var.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">QALA-08</span><span class="fname">Ailə / məktəb / qrup proqramları</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Ailə, məktəb və qruplar üçün xüsusi proqramları təqdim edir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Proqramlar göstərilir.</li><li>Sorğu forması işləyir.</li></ul>
+</div>
+</section>
+<section id="sec-PLAN" class="sec">
+<h2><span class="snum">1.9</span> Plan Your Visit <span class="scode">PLAN</span></h2>
+<div class="trk">Track: <b>Web</b></div>
+<p class="sdesc">Ziyarəti planlamaq üçün praktik məlumat mərkəzi — çatma, bilet, nəqliyyat, FAQ.</p>
+<div class="fn"><div class="fnhead"><span class="fid">PLAN-03</span><span class="fname">İçərişəhər / Qala-ya çatış</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçiyə İçərişəhərə və Qala-ya necə çatmağı (metro, avtobus, avtomobil) izah edir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Əsas çatma yolları göstərilir.</li><li>Xəritə/marşrut keçidi var.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PLAN-04</span><span class="fname">Biletlər / Pass məlumatı</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Bütün bilet növləri və Pass haqqında ümumi məlumat verib alışa yönləndirir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Bilet növləri və qiymətlər göstərilir.</li><li>Alış/Pass keçidi işləyir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PLAN-05</span><span class="fname">İnteraktiv xəritə</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Planlama səhifəsində istifadəçinin yerləri görüb marşrut qura bilməsi üçün xəritə.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Xəritə yüklənir və nöqtələr görünür.</li><li>Marşrut/naviqasiya keçidi var.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PLAN-01</span><span class="fname">Visa &amp; Entry məlumatı</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Xarici qonaqlar üçün viza və giriş qaydaları haqqında məlumat.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Viza məlumatı oxunaqlı göstərilir.</li><li>Rəsmi mənbəyə keçid (varsa) var.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PLAN-02</span><span class="fname">Hava limanı → şəhər nəqliyyat</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Hava limanından şəhərə çatma variantlarını izah edir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Nəqliyyat variantları və təxmini qiymət göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PLAN-06</span><span class="fname">Accessibility məlumatı</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Əlilliyi olan ziyarətçilər üçün əlçatanlıq məlumatı (rampalar, əlçatan marşrutlar).</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Əlçatanlıq məlumatı göstərilir.</li><li>Əlçatan yerlər qeyd olunur.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PLAN-07</span><span class="fname">Parking &amp; shuttle</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Parklanma yerləri və shuttle xidməti haqqında məlumat.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Parklanma yerləri göstərilir.</li><li>Xəritə keçidi var.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PLAN-11</span><span class="fname">Info mərkəzlər &amp; qaynar xətt</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Məlumat mərkəzlərinin yeri və əlaqə nömrələri.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Mərkəzlərin yeri və əlaqəsi göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PLAN-12</span><span class="fname">FAQ</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Tez-tez verilən sualları və cavablarını qruplaşdırır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Suallar kateqoriyalı göstərilir.</li><li>Sual açılıb-bağlana bilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PLAN-08</span><span class="fname">Hava məsləhətləri</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Mövsümə görə geyim və vizit məsləhətləri.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Mövsümi məsləhətlər göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PLAN-09</span><span class="fname">Ailə vizit guide</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Uşaqlı ailələr üçün vizit məsləhətləri və uyğun yerlər.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Ailəyə uyğun məzmun göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PLAN-10</span><span class="fname">Ödəniş / valyuta məlumatı</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Yerli valyuta, ödəniş üsulları və bankomatlar haqqında məlumat.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Valyuta və ödəniş məlumatı göstərilir.</li></ul>
+</div>
+</section>
+<section id="sec-TOP" class="sec">
+<h2><span class="snum">1.10</span> Top Things To Do <span class="scode">TOP</span></h2>
+<div class="trk">Track: <b>Web</b></div>
+<p class="sdesc">Seçilmiş ən yaxşı təcrübələrin toplandığı vitrin bölmə.</p>
+<div class="fn"><div class="fnhead"><span class="fid">TOP-01</span><span class="fname">Curated təcrübələr hub</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Redaksiya tərəfindən seçilmiş ən yaxşı görüləsi/ediləsi şeyləri bir mərkəzdə toplayır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Seçilmiş təcrübələr göstərilir.</li><li>Hər elementə klik detalına aparır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOP-02</span><span class="fname">Icons of İçərişəhər</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> İçərişəhərin simvol məkanlarını (Qız Qalası, Şirvanşahlar) önə çıxarır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Simvol yerlər şəkil və adla göstərilir.</li><li>Karta klik detal açır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOP-03</span><span class="fname">Pass təklifi</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Bu bölmədə Pass-ı təklif edib sərfəliliyini göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Pass təklifi göstərilir.</li><li>Alış keçidi işləyir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOP-04</span><span class="fname">Turlar bölməsi</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Seçilmiş turları bu vitrində göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Turlar göstərilir.</li><li>Tur detalına keçid var.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOP-05</span><span class="fname">Qala bölməsi</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Qala təcrübələrini vitrində önə çıxarır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Qala məzmunu göstərilir.</li><li>Qala səhifəsinə keçid var.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOP-06</span><span class="fname">Muzeylər bölməsi</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Seçilmiş muzeyləri vitrində göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Muzeylər göstərilir.</li><li>Muzey detalına keçid var.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOP-11</span><span class="fname">Hazır marşrutlar</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Hazır gəzinti marşrutlarını bu bölmədə təklif edir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Marşrutlar göstərilir.</li><li>Marşrut detalı açılır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOP-07</span><span class="fname">Sənətkarlar / craft spaces</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Sənətkar emalatxanalarını və əl işi məkanlarını göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Məkanlar göstərilir.</li><li>Detal keçidi var.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOP-08</span><span class="fname">Gizli yerlər (hidden gems)</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Az tanınan, maraqlı yerləri təqdim edir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Gizli yerlər göstərilir.</li><li>Detal keçidi var.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOP-09</span><span class="fname">Foto-zonalar</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Ən gözəl foto çəkmə nöqtələrini göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Foto-zonalar xəritədə/siyahıda göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TOP-10</span><span class="fname">Axşam / pulsuz fəaliyyətlər</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Axşam və pulsuz görüləsi şeyləri toplayır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Uyğun fəaliyyətlər göstərilir.</li></ul>
+</div>
+</section>
+<section id="sec-PHOTO" class="sec">
+<h2><span class="snum">1.11</span> Photo Heritage Collection <span class="scode">PHOTO</span></h2>
+<div class="trk">Track: <b>Web</b></div>
+<p class="sdesc">Tarixi foto kolleksiyası, baxış səviyyələri və lisenziya iş axını. (Hamısı P2 — ilk launch üçün kritik deyil.)</p>
+<div class="fn"><div class="fnhead"><span class="fid">PHOTO-01</span><span class="fname">Foto kolleksiyaları (4 kateqoriya)</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Tarixi və müasir foto kolleksiyalarını 4 kateqoriyada təqdim edir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Kolleksiyalar kateqoriyalı göstərilir.</li><li>Şəkilə klik böyük görünüş açır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PHOTO-02</span><span class="fname">Public Preview giriş</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> İctimai istifadəçilərə fotoların önizləmə (aşağı keyfiyyət) versiyasını göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Önizləmə şəkilləri görünür.</li><li>Tam keyfiyyət lisenziya tələb edir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PHOTO-03</span><span class="fname">Press Access</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Mətbuat nümayəndələrinə xüsusi giriş səviyyəsi verir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Press istifadəçisi əlavə materiallara çata bilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PHOTO-04</span><span class="fname">Research Access</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Tədqiqatçılara xüsusi giriş və materiallar təqdim edir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Tədqiqat girişi forması/axını işləyir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PHOTO-05</span><span class="fname">Image Licensing sistemi</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Şəkillərin istifadə hüququnun (lisenziya) satışı/idarəsi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Lisenziya növləri və şərtlər göstərilir.</li><li>Müraciət/alış axını işləyir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PHOTO-06</span><span class="fname">Lisenziya müraciət forması</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçinin şəkil lisenziyası üçün müraciət etməsi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Forma doldurulub göndərilə bilir.</li><li>Təsdiq mesajı göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PHOTO-07</span><span class="fname">Tədqiqat müraciət forması</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Tədqiqat girişi üçün müraciət forması.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Forma göndərilə bilir.</li><li>Təsdiq göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PHOTO-08</span><span class="fname">Təsdiq workflow</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Müraciətlərin admin tərəfindən baxılıb təsdiqlənməsi prosesi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Müraciət admin panelində görünür.</li><li>Təsdiq/rədd statusu dəyişdirilə bilir.</li></ul>
+</div>
+</section>
+<section id="sec-PASS" class="sec">
+<h2><span class="snum">1.12</span> İçərişəhər Pass <span class="scode">PASS</span></h2>
+<div class="trk">Track: <b>Web</b></div>
+<p class="sdesc">Bir neçə muzey/təcrübəni birləşdirən vahid bilet (Pass) məhsulu.</p>
+<div class="fn"><div class="fnhead"><span class="fid">PASS-01</span><span class="fname">Pass məhsul səhifəsi</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Pass-ın nə olduğunu, qiymətini və üstünlüklərini izah edən satış səhifəsi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Qiymət və üstünlüklər göstərilir.</li><li>Alış düyməsi işləyir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PASS-02</span><span class="fname">Daxil olan muzeylərin siyahısı</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Pass-a hansı muzey və təcrübələrin daxil olduğunu göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Daxil olan yerlər siyahıda göstərilir.</li><li>Hər yerə keçid var.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PASS-03</span><span class="fname">Faiz fayda göstəricisi</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Pass-ın ayrıca biletlərə nisbətən nə qədər qənaət etdiyini göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Qənaət faizi/məbləği göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PASS-04</span><span class="fname">Pass alış (e-ticarət)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçinin Pass-ı onlayn alması.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Pass səbətə əlavə olunub alına bilir.</li><li>Uğurlu alışdan sonra təsdiq göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">PASS-05</span><span class="fname">Rəqəmsal Pass / QR</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Alınan Pass rəqəmsal QR kod kimi təqdim olunur; girişdə skan edilir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Alışdan sonra QR kod yaranır.</li><li>QR kod muzey girişində skan edilə bilir.</li></ul>
+</div>
+</section>
+<section id="sec-ECOM" class="sec">
+<h2><span class="snum">1.13</span> E-ticarət <span class="scode">ECOM</span></h2>
+<div class="trk">Track: <b>Web</b></div>
+<p class="sdesc">Səbət, ödəniş və sifariş idarəsi — bütün alışların əsası. Ödəniş axını ən kritik test sahəsidir.</p>
+<div class="fn"><div class="fnhead"><span class="fid">ECOM-01</span><span class="fname">Səbət (cart)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçinin seçdiyi məhsulları (tur, bilet, Pass) bir səbətdə toplaması.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Məhsul səbətə əlavə/çıxarıla bilir.</li><li>Say və ümumi məbləğ yenilənir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ECOM-02</span><span class="fname">Checkout axını</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Səbətdən ödənişə qədər addım-addım proses.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>İstifadəçi məlumatlarını daxil edə bilir.</li><li>Ümumi məbləğ aydın göstərilir.</li><li>Ödənişə keçid işləyir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ECOM-03</span><span class="fname">Ödəniş şlüzü inteqrasiyası</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Bank/ödəniş sistemi ilə təhlükəsiz əlaqə.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Ödəniş təhlükəsiz şəkildə emal olunur.</li><li>Uğurlu/uğursuz ödəniş düzgün göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ECOM-04</span><span class="fname">Kart ödənişləri</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Bank kartı ilə ödəniş imkanı.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Kartla ödəniş tamamlana bilir.</li><li>Səhv kart məlumatı xəbərdarlıq verir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ECOM-05</span><span class="fname">Cancellation / refund məntiqi</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Ləğv və geri ödəniş qaydalarının tətbiqi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Ləğv şərtləri göstərilir.</li><li>Uyğun hallarda geri ödəniş başladılır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ECOM-06</span><span class="fname">Sifariş təsdiqi / email</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Alışdan sonra təsdiq ekranı və e-poçt göndərilməsi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Təsdiq ekranı göstərilir.</li><li>Təsdiq e-poçtu göndərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ECOM-07</span><span class="fname">Sifariş tarixçəsi</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçinin keçmiş sifarişlərini görməsi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Keçmiş sifarişlər siyahıda görünür.</li><li>Sifariş detalı açıla bilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ECOM-08</span><span class="fname">Promo kodlar / endirimlər</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Endirim kodlarının tətbiqi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Promo kod daxil edilib tətbiq oluna bilir.</li><li>Səhv kod xəbərdarlıq verir.</li></ul>
+</div>
+</section>
+<section id="sec-TECH" class="sec">
+<h2><span class="snum">1.14</span> Texniki funksiyalar <span class="scode">TECH</span></h2>
+<div class="trk">Track: <b>Web</b></div>
+<p class="sdesc">Bütün platformanı dəstəkləyən texniki bünövrə — xəritə, axtarış, çoxdillilik, QR, performans.</p>
+<div class="fn"><div class="fnhead"><span class="fid">TECH-01</span><span class="fname">İnteraktiv xəritə (kateqoriyalı)</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Bütün sayt boyu istifadə olunan xəritə mühərriki — nöqtələri kateqoriyalara görə göstərir, böyüdüb-kiçiltməyə imkan verir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Xəritə nöqtələri düzgün göstərir.</li><li>Kateqoriyaya görə filtr işləyir.</li><li>Mobil cihazda da rahat işləyir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TECH-02</span><span class="fname">Axtarış və filtr mexanikası</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Sayt boyu istifadə olunan ortaq axtarış və filtr sistemi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Açar sözə görə nəticələr qaytarılır.</li><li>Filtrlər birlikdə tətbiq oluna bilir.</li><li>Nəticələr sürətli yüklənir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TECH-06</span><span class="fname">Locale routing (/az/, /en/ ...)</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Hər dil üçün ayrıca ünvan strukturu (məs. /az/, /en/). Linklər dilə görə düzgün işləyir və paylaşıla bilir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Hər dil öz ünvanında açılır.</li><li>Dil dəyişəndə ünvan da uyğun dəyişir.</li><li>Birbaşa dilli link paylaşıla bilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TECH-07</span><span class="fname">QR kod giriş sistemi</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Fiziki QR kodları skan edəndə istifadəçini saytın uyğun səhifəsinə aparır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>QR skan düzgün səhifəni açır.</li><li>Səhv/köhnə QR uyğun mesaj göstərir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TECH-04</span><span class="fname">6 dil arxitekturası (i18n)</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Bütün mətnlərin 6 dildə idarə olunmasının texniki əsası.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Bütün interfeys mətnləri tərcümə oluna bilir.</li><li>Yeni dil əlavə etmək mümkündür.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TECH-03</span><span class="fname">"Yaxınımda nə var" (GPS)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçinin yerini (GPS) əsas alıb yaxınlıqdakı yerləri göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>İcazə verildikdə yaxın yerlər göstərilir.</li><li>İcazə yoxdursa uyğun mesaj çıxır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TECH-05</span><span class="fname">Ərəb dili RTL (sağdan-sola)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Ərəb dilində bütün interfeysin sağdan-sola düzgün göstərilməsi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Mətn və elementlər sağdan-sola düzülür.</li><li>Düzülüş pozulmur.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TECH-08</span><span class="fname">PWA (offline keş, mobil performans)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Saytın tətbiq kimi davranması — sürətli açılış, qismən offline iş.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Sayt ekrana əlavə oluna bilir.</li><li>Əsas səhifələr offline da açılır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TECH-09</span><span class="fname">İstifadə analitikası</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçi davranışının (səhifə baxışı, kliklər) ölçülməsi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Əsas hadisələr qeydə alınır.</li><li>Məlumat analitika panelində görünür.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TECH-10</span><span class="fname">SEO optimizasiyası</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Saytın axtarış sistemlərində (Google) yaxşı tapılması üçün optimallaşdırma.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Səhifələrin başlıq/təsviri düzgündür.</li><li>Səhifələr axtarışda indekslənə bilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">TECH-11</span><span class="fname">Performans (Lighthouse, CDN)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Saytın sürətli yüklənməsi və sabit işləməsi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Səhifələr qəbul olunan müddətdə yüklənir.</li><li>Şəkillər optimallaşdırılıb.</li></ul>
+</div>
+</section>
+<section id="sec-ADMIN" class="sec">
+<h2><span class="snum">1.15</span> Admin / CMS <span class="scode">ADMIN</span></h2>
+<div class="trk">Track: <b>Web</b></div>
+<p class="sdesc">Komandanın kontenti idarə etdiyi arxa panel — developer olmadan məzmun yenilənir.</p>
+<div class="fn"><div class="fnhead"><span class="fid">ADMIN-01</span><span class="fname">Kontent idarəetmə (CRUD)</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Admin istifadəçiləri məzmunu (yer, tur, muzey və s.) əlavə edə, redaktə edə və silə bilir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Yeni element əlavə oluna bilir.</li><li>Mövcud element redaktə/silinə bilir.</li><li>Dəyişiklik saytda görünür.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ADMIN-02</span><span class="fname">Kontent modelləri (POI, tur, muzey, otel)</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Hər məzmun növü üçün strukturlaşdırılmış sahələr (ad, şəkil, qiymət və s.).</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Hər növün öz sahələri var.</li><li>Məcburi sahələr boş ötürülə bilmir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ADMIN-03</span><span class="fname">Çoxdilli kontent idarəetmə</span><span class="pp P0">P0</span></div>
+<p class="ne"><b>Nə edir:</b> Hər məzmunun 6 dildə versiyasının idarə olunması.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Hər dil üçün ayrıca mətn daxil edilə bilir.</li><li>Tərcümə olunmamış sahə qeyd olunur.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ADMIN-04</span><span class="fname">Tədbir idarəetmə</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Tədbirlərin (tarix, yer, təsvir) əlavə və idarə olunması.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Tədbir əlavə/redaktə oluna bilir.</li><li>Keçmiş tədbirlər avtomatik gizlənir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ADMIN-05</span><span class="fname">İstifadəçi rolları / icazələr</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Kim nəyi edə bilər — rol əsaslı icazələr.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Rollar təyin oluna bilir.</li><li>İcazəsiz əməliyyat bloklanır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ADMIN-06</span><span class="fname">Analitika dashboard</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Əsas göstəricilərin (ziyarət, satış) admin panelində göstərilməsi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Əsas metrikalar göstərilir.</li><li>Tarix aralığı seçilə bilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ADMIN-07</span><span class="fname">Sifariş / bron idarəetmə</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Sifariş və bronların admin tərəfindən görünməsi və idarəsi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Sifarişlər siyahıda görünür.</li><li>Status dəyişdirilə bilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ADMIN-08</span><span class="fname">Media kitabxana</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Şəkil və faylların yüklənib təkrar istifadəsi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Fayl yüklənə bilir.</li><li>Yüklənmiş media yenidən istifadə oluna bilir.</li></ul>
+</div>
+</section>
+<section id="sec-ROUTE" class="sec">
+<h2><span class="snum">1.16</span> Marşrut &amp; Naviqasiya (xəritədə) <span class="scode">ROUTE</span></h2>
+<div class="trk">Track: <b>Web</b></div>
+<p class="sdesc">İstifadəçinin interaktiv xəritə üzərində marşrut görməsi və AI əsaslı günlük plan alması. (Fiziki həll deyil — web funksionallığıdır.)</p>
+<div class="fn"><div class="fnhead"><span class="fid">ROUTE-01</span><span class="fname">Xəritədə marşrut göstərmə (A→B)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçi iki nöqtə arasında (məs. girişdən Qız Qalasına) xəritədə yolu görür.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Başlanğıc və son nöqtə seçilə bilir.</li><li>Xəritədə yol çəkilir.</li><li>Təxmini məsafə/vaxt göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ROUTE-02</span><span class="fname">Yer axtar → ora marşrut</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçi bir yeri axtarıb seçdikdə oraya gedən marşrutu görür.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Axtarılan yer xəritədə tapılır.</li><li>Cari yerdən ora marşrut qurulur.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ROUTE-03</span><span class="fname">AI əsaslı günlük plan (maraqlara görə)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçinin marağına və vaxtına görə süni intellekt günlük gəzinti planı təklif edir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>İstifadəçi maraq və vaxt seçə bilir.</li><li>Sistem ardıcıl plan (yerlər + marşrut) təklif edir.</li><li>Plan xəritədə göstərilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ROUTE-04</span><span class="fname">Addım-addım istiqamət</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Marşrut boyunca addım-addım istiqamət (wayfinding) göstərir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Hər addım aydın mətnlə göstərilir.</li><li>İstifadəçi addımları izləyə bilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ROUTE-05</span><span class="fname">Hazır tematik marşrutlar (xəritədə)</span><span class="pp P1">P1</span></div>
+<p class="ne"><b>Nə edir:</b> Hazır mövzulu marşrutları (tarix, foto və s.) xəritədə təqdim edir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Hazır marşrutlar siyahıda görünür.</li><li>Marşrut xəritədə yüklənir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ROUTE-06</span><span class="fname">Çoxdilli marşrut təlimatları</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Marşrut təlimatlarının seçilmiş dildə göstərilməsi.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Təlimatlar seçilmiş dildə görünür.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">ROUTE-07</span><span class="fname">Marşrut boyu yaxın POI-lər</span><span class="pp P2">P2</span></div>
+<p class="ne"><b>Nə edir:</b> Marşrut boyunca yaxınlıqdakı maraq nöqtələrini təklif edir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Marşrut yanındakı yerlər göstərilir.</li><li>Yerə klik detalını açır.</li></ul>
+</div>
+</section>
+<section id="sec-LABEL" class="sec">
+<h2><span class="snum">2.1</span> "Bu nədir" bina etiketləri <span class="scode">LABEL</span></h2>
+<div class="trk">Track: <b>Fiziki</b></div>
+<p class="sdesc">Tarixi binalara yerləşdirilən fiziki etiketlər — QR ilə saytdakı məlumata bağlanır. Bunlar iş addımlarıdır.</p>
+<div class="fn"><div class="fnhead"><span class="fid">LABEL-01</span><span class="fname">Etiketlənəcək binaların siyahısının tərtibi</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Hansı binaların etiketlənəcəyinə qərar verilir və təsdiqlənmiş siyahı hazırlanır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Bina siyahısı hazırlanıb.</li><li>Siyahı sifarişçi tərəfindən təsdiqlənib.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">LABEL-02</span><span class="fname">Hər bina üçün qısa AZ/EN mətnlər</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Hər bina üçün qısa, anlaşıqlı izah mətni Azərbaycan və ingilis dillərində yazılır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Hər binanın AZ və EN mətni var.</li><li>Mətnlər qısa və oxunaqlıdır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">LABEL-03</span><span class="fname">Tarixi məlumatların ekspert yoxlaması</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Mətnlərdəki tarixi faktlar ekspert tərəfindən yoxlanılır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Mətnlər ekspert təsdiqindən keçib.</li><li>Düzəlişlər tətbiq olunub.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">LABEL-04</span><span class="fname">Etiket dizaynı (material, ölçü, quraşdırma)</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Etiketin görünüşü, materialı və quraşdırma üsulu dizayn olunur.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Dizayn nümunəsi hazırlanıb.</li><li>Material və ölçü təsdiqlənib.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">LABEL-05</span><span class="fname">QR kod inteqrasiyası (web-ə keçid)</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Hər etiketə QR kod əlavə olunur ki, saytdakı uyğun səhifəni açsın.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Hər etiketin unikal QR kodu var.</li><li>QR skan düzgün səhifəni açır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">LABEL-06</span><span class="fname">İstehsal</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Təsdiqlənmiş etiketlər istehsal olunur.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Etiketlər istehsal olunub.</li><li>Keyfiyyət yoxlanılıb.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">LABEL-07</span><span class="fname">Yerləşdirmə</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Etiketlər müvafiq binalara quraşdırılır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Etiketlər düzgün yerlərə quraşdırılıb.</li><li>Yerləşdirmə icazəsi alınıb.</li></ul>
+</div>
+</section>
+<section id="sec-GATE" class="sec">
+<h2><span class="snum">2.2</span> "Siz buradasınız" giriş xəritələri <span class="scode">GATE</span></h2>
+<div class="trk">Track: <b>Fiziki</b></div>
+<p class="sdesc">Giriş nöqtələrində böyük oriyentasiya xəritələri — QR ilə saytdakı interaktiv xəritəyə bağlanır. Bunlar iş addımlarıdır.</p>
+<div class="fn"><div class="fnhead"><span class="fid">GATE-01</span><span class="fname">Giriş nöqtələrinin müəyyənləşdirilməsi</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Xəritələrin yerləşdiriləcəyi əsas giriş nöqtələri seçilir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Giriş nöqtələri müəyyən edilib.</li><li>Siyahı təsdiqlənib.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">GATE-02</span><span class="fname">Xəritə kontentinin hazırlanması (legenda)</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Fiziki xəritənin məzmunu və işarələr cədvəli (legenda) hazırlanır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Xəritə məzmunu hazırdır.</li><li>Legenda aydın və düzgündür.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">GATE-03</span><span class="fname">Böyük formatda dizayn və çap</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Xəritə böyük formatda dizayn olunub çapa hazırlanır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Böyük format dizaynı hazırdır.</li><li>Çap keyfiyyəti yoxlanılıb.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">GATE-04</span><span class="fname">QR kod ilə web platformaya yönləndirmə</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Xəritəyə QR əlavə olunur ki, saytdakı interaktiv xəritəni açsın.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>QR kod xəritədə var.</li><li>Skan interaktiv xəritəni açır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">GATE-05</span><span class="fname">Fiziki panel konstruksiyası və quraşdırma</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Xəritə paneli hazırlanıb giriş nöqtələrinə quraşdırılır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Panel quraşdırılıb.</li><li>Quraşdırma icazəsi alınıb.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">GATE-06</span><span class="fname">Hava şəraitinə davamlı material</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Panellər açıq havaya davamlı materialdan hazırlanır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Material hava şəraitinə davamlıdır.</li><li>Keyfiyyət yoxlanılıb.</li></ul>
+</div>
+</section>
+<section id="sec-AG" class="sec">
+<h2><span class="snum">3.1</span> AI Audio Guide (Dalğa 1) <span class="scode">AG</span></h2>
+<div class="trk">Track: <b>AI</b></div>
+<p class="sdesc">Süni intellekt əsaslı səsli bələdçi — saytın içində modul kimi işləyir. Erkən, paralel başlaya bilən track.</p>
+<div class="fn"><div class="fnhead"><span class="fid">AG-01</span><span class="fname">Bələdçi mətninin avtomatik yaradılması</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Süni intellekt hər məkan üçün bələdçi mətnini istifadəçinin yeri və marağına uyğun avtomatik hazırlayır. Bu, hər yer üçün əl ilə mətn yazmaq ehtiyacını azaldır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Məkana uyğun mətn avtomatik yaranır.</li><li>Mətn marağa görə dəyişə bilir.</li><li>Yaranan mətn admin tərəfindən yoxlana bilir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">AG-02</span><span class="fname">Mətnin canlı səsə çevrilməsi (10+ dil)</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Hazır mətn təbii səsli audioya çevrilir və bunu 10-dan çox dildə edir. Diktor yazdırmağa ehtiyac qalmır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Mətn səsə çevrilir.</li><li>10-dan çox dil dəstəklənir.</li><li>Səs təbii və aydındır.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">AG-03</span><span class="fname">İstənilən dildə səsli bələdçi</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçi seçdiyi dildə audio bələdçini dinləyə bilir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>İstifadəçi dil seçə bilir.</li><li>Audio seçilmiş dildə oxunur.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">AG-04</span><span class="fname">Məkana yaxınlaşanda avtomatik başlama</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> İstifadəçi bir məkana yaxınlaşanda (GPS) uyğun audio avtomatik başlayır.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Yaxınlaşanda uyğun audio təklif olunur/başlayır.</li><li>GPS icazəsi yoxdursa əl ilə başlatmaq olur.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">AG-05</span><span class="fname">Bina yanında avtomatik audio (sensor)</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Xüsusi sensorlar (BLE) vasitəsilə bina yaxınlığında dəqiq audio işə düşür.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Sensor yaxınlığında uyğun audio işə düşür.</li><li>Sensor yoxdursa GPS/əl ilə işləyir.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">AG-06</span><span class="fname">Saytın içində işləməsi — ayrıca tətbiq yox</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Audio bələdçi mövcud web platformaya modul kimi inteqrasiya olunur; istifadəçi ayrıca tətbiq yükləməyə məcbur deyil.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Audio bələdçi sayt daxilində işləyir.</li><li>Ayrıca tətbiq tələb olunmur.</li></ul>
+</div>
+<div class="fn"><div class="fnhead"><span class="fid">AG-07</span><span class="fname">Audioların idarə olunması (admin)</span><span class="pp PD">—</span></div>
+<p class="ne"><b>Nə edir:</b> Admin audio məzmununu (mətn, dil, yer) idarə edə bilir.</p>
+<p class="qm"><b>Qəbul meyarları:</b></p>
+<ul class="crit"><li>Audio məzmunu əlavə/redaktə oluna bilir.</li><li>Dəyişiklik istifadəçiyə əks olunur.</li></ul>
+</div>
+</section>
+</div>
+</body></html>
